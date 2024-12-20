@@ -29,9 +29,12 @@ class FraisService
 
     public function deleteFrais(Frai $frais)
     {
-        $frais->delete();
+        try {
+            Frai::destroy($frais);
+        } catch(QueryException $e){
+            throw new Exception($e->getMessage());
+        }
     }
-
     public function getFraisByVisiteur($idVisiteur)
     {
         return Frai::where('id_visiteur', $idVisiteur)->get();
